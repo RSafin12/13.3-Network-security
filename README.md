@@ -17,21 +17,21 @@
 Подготовлены были 2 VDS, одна защищаяемая, другая атакующая.   
 Установить ПО было просто.   
 
-Далее были произведены атаки nmap, однако каких-либо результатов не было зафиксировано. Причем я пробовал атаковать как локальный IP, так и  внешний IP. Пробовал с включенным/выключенным firewall  
-В общем, перепробовал все варианты, но логи fail2ban и suricata пустые  
-Скрины  
-Со включенным ufw результат атаки  
-![ufw_enable](https://github.com/RSafin12/13.3-Network-security/blob/main/ufw_enable.png)  
-С выключенным ufw результат уже другой, атака длилась дольше  
-![ufw_disable](https://github.com/RSafin12/13.3-Network-security/blob/main/ufw_disable.png)  
-вывод fail2ban-client status sshd  
-![f2b_status](https://github.com/RSafin12/13.3-Network-security/blob/main/ufw_status.png)  
-тут меня просто бот  
-![bot](https://github.com/RSafin12/13.3-Network-security/blob/main/bot.png)
-пустой лог f2b  
-![f2b_log](https://github.com/RSafin12/13.3-Network-security/blob/main/f2b_log.png)
-абсолютно пустой лог suricata
-![suricata](https://github.com/RSafin12/13.3-Network-security/blob/main/suricata.png)
+Были некоторые проблемы, т.к. из коробки не было правил suricata.rules по  пути /var/lib/suricata/rules/  
+Сработало такое решение   
+- смотрим сначала список ruleset providers командой   
+`sudo suricata-update list-sources`  
+- находим какие-нибудь бесплатные и подгружаем, например  
+`sudo suricata-update enable-source tgreen/hunting`  
+Далее стандатный yaml-файл нормально работает
 
-Тут вероятно потребуется какая-то тонкая настройка f2b и suricata, просто из коробоки они не дают ожидаемого результата(ну кроме блокировки ботов).   
-Позже повторил эксперимент на локальных VM VirtualBoX, все также  
+С первой VM  на вторую была произведена атака  
+![attack](https://github.com/RSafin12/13.3-Network-security/blob/main/attack.png)
+Атака была зафиксирована в fast_log  
+![fast_log](https://github.com/RSafin12/13.3-Network-security/blob/main/fast_log.png)  
+Также привожу логи suricata.log и stats.log  
+![suricata.log](https://github.com/RSafin12/13.3-Network-security/blob/main/suricata_log.png)
+![stats.log](https://github.com/RSafin12/13.3-Network-security/blob/main/suricata_stats.png)
+Также проверил логи fail2ban, грепнул по 172.16.16  
+IP атакующей машины 172.16.16.15  
+![f2b](https://github.com/RSafin12/13.3-Network-security/blob/main/f2b_logs.png)
