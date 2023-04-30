@@ -36,3 +36,68 @@
 Также проверил логи fail2ban, грепнул по 172.16.16  
 IP атакующей машины 172.16.16.15  
 ![f2b](https://github.com/RSafin12/13.3-Network-security/blob/main/f2b_logs.png)
+
+### Задание 1
+
+Теперь проведем подбор паролей, с выключенным и включенным fail2ban  
+fail2ban остановлен  
+Результат работы hydra, как видно пароль подобран.   
+![hydra_1](https://github.com/RSafin12/13.3-Network-security/blob/main/2-hydra_OK.png)  
+Смотрим fast.log suricata и видим сообщения предупреждающего характера  
+![fast_log_before](https://github.com/RSafin12/13.3-Network-security/blob/main/2-fast_log_before.png)  
+
+fail2ban теперь включен  
+В этот раз пароль подобрать не удалось  
+![hydra_NOT_OK](https://github.com/RSafin12/13.3-Network-security/blob/main/2-hydra_NOT_OK.png)  
+Смотрим fast.log suricata, также зафиксирована попытка, но в этот раз только одна запись, вместо нескольких  
+![ast_log_after](https://github.com/RSafin12/13.3-Network-security/blob/main/2-f2b_fast_log_after.png)  
+Далее проверяем auth.log  
+![f2b_auth_log](https://github.com/RSafin12/13.3-Network-security/blob/main/2-f2b_auth_log.png)  
+И также fail2ban.log
+![f2b_log](https://github.com/RSafin12/13.3-Network-security/blob/main/2-f2b_log.png)  
+
+По итогу становится очевидным, что просто наличие fail2ban значительно затрудняет работу злоумышленника и повышает степень защищенности сервера, must have!   
+ДЗ делал на VDS  у которого есть публичный IP, невероятно много ботов стучалось по 22 порту, что также показывает, насколько важно иметь fail2ban. Грепнул по IP 172.16.16.15, чтобы было читабельно.   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
