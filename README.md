@@ -37,7 +37,7 @@
 IP атакующей машины 172.16.16.15  
 ![f2b](https://github.com/RSafin12/13.3-Network-security/blob/main/f2b_logs.png)
 
-### Задание 1
+### Задание 2
 
 Теперь проведем подбор паролей, с выключенным и включенным fail2ban  
 fail2ban остановлен  
